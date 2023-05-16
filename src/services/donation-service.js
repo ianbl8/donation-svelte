@@ -15,6 +15,7 @@ export const donationService = {
                     email: email,
                     token: response.data.token
                 });
+                localStorage.donation = JSON.stringify({ email: email, token: response.data.token });
                 return true;
             }
             return false;
@@ -46,5 +47,17 @@ export const donationService = {
         } catch (error) {
             return false;
         }
-    }
+    },
+
+    reload() {
+        const donationCredentials = localStorage.donation;
+        if (donationCredentials) {
+            const savedUser = JSON.parse(donationCredentials);
+            user.set({
+                email: savedUser.email,
+                token: savedUser.token
+            });
+            axios.defaults.headers.common["Authorization"] = "Bearer " + savedUser.token;
+        }
+    },
 };
