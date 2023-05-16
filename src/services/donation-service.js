@@ -1,6 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 import axios from "axios";
+import { user } from "../stores.js";  
 
 export const donationService = {
     baseUrl: "http://localhost:4000",
@@ -10,6 +11,10 @@ export const donationService = {
             const response = await axios.post(`${this.baseUrl}/api/users/authenticate`, { email, password });
             axios.defaults.headers.common["Authorization"] = "Bearer " + response.data.token;
             if (response.data.success) {
+                user.set({
+                    email: email,
+                    token: response.data.token
+                });
                 return true;
             }
             return false;
@@ -20,6 +25,10 @@ export const donationService = {
     },
 
     async logout() {
+        user.set({
+            email: "",
+            token: "",
+          });
         axios.defaults.headers.common["Authorization"] = "";
         localStorage.removeItem("donation");
     },
