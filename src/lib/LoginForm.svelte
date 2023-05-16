@@ -5,7 +5,7 @@
   let password = '';
 
   async function login() {
-      console.log(`attemting to log in email: ${email} with password: ${password}`);
+      console.log(`attempting to log in email: ${email} with password: ${password}`);
       goto('/donate');
   }
 </script>

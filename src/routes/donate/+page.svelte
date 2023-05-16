@@ -1,9 +1,12 @@
 <script>
   import Header from '$lib/Header.svelte';
+  import MainNavigator from '$lib/MainNavigator.svelte';
   import DonateForm from '$lib/DonateForm.svelte';
 </script>
 
-<Header />
+<Header>
+  <MainNavigator />
+</Header>
 
 <div class="columns is-vcentered">
   <div class="column has-text-centered">
