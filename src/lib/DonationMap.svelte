@@ -15,6 +15,7 @@
 	onMount(async () => {
 		const map = new LeafletMap('donation-map', mapConfig);
 		map.showZoomControl();
+    map.addLayerGroup('Donations');
 		map.showLayerControl();
 		const donations = await donationService.getDonations();
 		donations.forEach((donation) => {
@@ -26,7 +27,7 @@
 		const donationStr = `${donation.candidate.firstName} ${
 			donation.candidate.lastName
 		} €${donation.amount.toString()}`;
-		map.addMarker({ lat: donation.lat, lng: donation.lng }, donationStr);
+		map.addMarker({ lat: donation.lat, lng: donation.lng }, donationStr, "Donations");
 	}
 </script>
 
