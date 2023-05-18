@@ -24,9 +24,7 @@
 	});
 
 	function addDonationMarker(map, donation) {
-		const donationStr = `${donation.candidate.firstName} ${
-			donation.candidate.lastName
-		} €${donation.amount.toString()}`;
+		const donationStr = `${donation.candidate.firstName} ${donation.candidate.lastName} €${donation.amount.toString()}`;
 		map.addMarker({ lat: donation.lat, lng: donation.lng }, donationStr, "Donations");
 	}
 </script>
