@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 import axios from "axios";
-import { user } from "../stores.js";  
+import { latestDonation, user } from "../stores.js";
 
 export const donationService = {
     baseUrl: "http://localhost:4000",
@@ -64,6 +64,7 @@ export const donationService = {
     async donate(donation) {
         try {
             const response = await axios.post(this.baseUrl + "/api/candidates/" + donation.candidate + "/donations", donation);
+            latestDonation.set(donation);
             return response.status == 200;
         } catch (error) {
             return false;
@@ -79,6 +80,15 @@ export const donationService = {
         }
     },
 
+    async getCandidate(id) {
+        try {
+            const response = await axios.get(this.baseUrl + "/api/candidates/" + id);
+            return response.data;
+        } catch (error) {
+            return [];
+        }
+    },
+    
     async getDonations() {
         try {
             const response = await axios.get(this.baseUrl + "/api/donations");
