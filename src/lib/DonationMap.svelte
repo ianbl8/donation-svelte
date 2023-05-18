@@ -1,7 +1,10 @@
 <script>
+	// @ts-nocheck
+
 	import 'leaflet/dist/leaflet.css';
 	import { LeafletMap } from '../services/leaflet-map';
 	import { onMount } from 'svelte';
+	import { donationService } from '../services/donation-service';
 
 	const mapConfig = {
 		location: { lat: 52.160858, lng: -7.15242 },
@@ -13,7 +16,18 @@
 		const map = new LeafletMap('donation-map', mapConfig);
 		map.showZoomControl();
 		map.showLayerControl();
+		const donations = await donationService.getDonations();
+		donations.forEach((donation) => {
+			addDonationMarker(map, donation);
+		});
 	});
+
+	function addDonationMarker(map, donation) {
+		const donationStr = `${donation.candidate.firstName} ${
+			donation.candidate.lastName
+		} €${donation.amount.toString()}`;
+		map.addMarker({ lat: donation.lat, lng: donation.lng }, donationStr);
+	}
 </script>
 
 <div class="box" id="donation-map" style="height:75vh" />
